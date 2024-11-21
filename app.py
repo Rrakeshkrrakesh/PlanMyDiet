@@ -24,7 +24,7 @@ st.title("Diet Optimizer")
 st.sidebar.header("Dietary Requirements")
 min_calories = st.sidebar.number_input("Minimum Calories:", min_value=0, value=2000)
 min_protein = st.sidebar.number_input("Minimum Protein (g):", min_value=0, value=50)
-budget_range = st.sidebar.slider("Budget Range (₹):", 0, 500, (100, 300))
+budget_range = st.sidebar.slider("Budget Range (₹):", 0, 5500, (100, 3000))
 
 # User input for food selection
 st.header("Select Food Items")
