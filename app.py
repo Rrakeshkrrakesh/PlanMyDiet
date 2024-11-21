@@ -5,16 +5,17 @@ from scipy.optimize import linprog
 
 # Define the food items and their nutritional information
 food_items = {
-    "Rice": {"calories": 200, "protein": 6, "cost": 20},
-    "Eggs": {"calories": 70, "protein": 7, "cost": 10},
-    "Chicken": {"calories": 200, "protein": 30, "cost": 50},
-    "Lentils": {"calories": 150, "protein": 10, "cost": 15},
-    "Milk": {"calories": 100, "protein": 8, "cost": 12},
-    "Bread": {"calories": 250, "protein": 8, "cost": 10}
+    "Rice": {"calories": 360, "protein": 7.5, "cost": 50, "unit": "kg"},
+    "Bread": {"calories": 265, "protein": 9.4, "cost": 23, "unit": "packet"},
+    "Egg": {"calories": 70, "protein": 6.3, "cost": 8, "unit": "piece"},
+    "Milk": {"calories": 67, "protein": 3.3, "cost": 62, "unit": "litre"},
+    "Lentil": {"calories": 353, "protein": 25.8, "cost": 140, "unit": "kg"},
+    "Chicken": {"calories": 239, "protein": 27, "cost": 220, "unit": "kg"},
+    "Paneer": {"calories": 265, "protein": 18.3, "cost": 350, "unit": "kg"}
 }
 
 # Convert food items to a DataFrame for display
-food_df = pd.DataFrame.from_dict(food_items, orient='index', columns=['calories', 'protein', 'cost'])
+food_df = pd.DataFrame.from_dict(food_items, orient='index', columns=['calories', 'protein', 'cost', 'unit'])
 
 # Streamlit app
 st.title("Diet Optimizer")
@@ -31,7 +32,7 @@ selected_foods = st.multiselect("Choose food items:", list(food_items.keys()))
 
 # Filter selected food items
 selected_food_items = {k: food_items[k] for k in selected_foods}
-selected_food_df = pd.DataFrame.from_dict(selected_food_items, orient='index', columns=['calories', 'protein', 'cost'])
+selected_food_df = pd.DataFrame.from_dict(selected_food_items, orient='index', columns=['calories', 'protein', 'cost', 'unit'])
 
 if st.button("Optimize Diet"):
     # Extract data for linear programming
@@ -52,7 +53,7 @@ if st.button("Optimize Diet"):
         # Display the optimal solution
         st.write("Optimal Diet Plan:")
         for i, food in enumerate(selected_foods):
-            st.write(f"{food}: {optimal_solution[i]:.2f} units")
+            st.write(f"{food}: {optimal_solution[i]:.2f} {food_items[food]['unit']}")
         st.write(f"Total Cost: ₹{total_cost:.2f}")
 
         # Display the nutritional information
